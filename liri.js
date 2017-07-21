@@ -39,6 +39,22 @@ function showTweets() {
 	});
 }
 
+function songData(query) {
+	spotify.search({ type: 'track', query: query }, function(err, data) {
+		if (err) {
+	    	return console.log(err);
+	  	}
+	  	var obj = data.tracks.items[0];
+
+	 	console.log("****************");
+		console.log("Artist: " + obj.artists[0].name);
+		console.log("Song: " + obj.name);
+		console.log("Preview URL: " + obj.preview_url);
+		console.log("Album: " + obj.album.name);
+		console.log("****************");
+	});
+}
+
 function movieData(query) {
 	request(query, function(error, response, body) {
   	
@@ -71,7 +87,7 @@ function randomCommand() {
 		var tempCommand = data[0];
 		var tempSearch = data[1];
 
-		doTheThing(tempCommand, tempSearch);
+		interpret(tempCommand, tempSearch);
 
 	})
 }
@@ -85,12 +101,14 @@ function interpret(com, q) {	//interprets console input
 
 		case "spotify-this-song": {
 			var title;
-			console.log("this is a terrible song i forbid you to hear it");
 			if (!q) {
-				title = "Mr. Nobody";
+				title = "The Sign";
 			} else {
 				title = q.split("'")[0];
 			}
+
+			songData(title);
+
 			break;
 		}
 
@@ -106,6 +124,7 @@ function interpret(com, q) {	//interprets console input
 			var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=40e9cece";
 
 			movieData(queryUrl);
+
 			break;
 		}
 
