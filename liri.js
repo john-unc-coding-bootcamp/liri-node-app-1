@@ -60,6 +60,7 @@ function movieData(query) {
   	
 	  	if (!error && response.statusCode === 200) {
 			var obj = JSON.parse(body);
+
 			console.log("****************");
 			console.log("Title: " + obj["Title"]);
 			console.log("Year: " + obj["Year"]);
@@ -86,7 +87,9 @@ function randomCommand() {
 		data = data.split(",");
 		var tempCommand = data[0];
 		var tempSearch = data[1];
-
+		
+		console.log(tempCommand);
+		console.log(tempSearch)
 		interpret(tempCommand, tempSearch);
 
 	})
@@ -104,7 +107,8 @@ function interpret(com, q) {	//interprets console input
 			if (!q) {
 				title = "The Sign";
 			} else {
-				title = q.split("'")[0];
+				title = q.split("'");
+				console.log(title);
 			}
 
 			songData(title);
@@ -119,6 +123,7 @@ function interpret(com, q) {	//interprets console input
 				title = "Mr. Nobody";
 			} else {
 				title = q.split("'")[0];
+				console.log(title)
 			}
 
 			var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=40e9cece";
