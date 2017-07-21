@@ -86,8 +86,11 @@ function randomCommand() {
 
 		data = data.split(",");
 		var tempCommand = data[0];
-		//not sure about this method of removing quotes
-		var tempSearch = data[1].substring(1, data[1].length-1);
+		var tempSearch;
+
+		if (data[1]) {	//removes outer quotes if search term is used
+			tempSearch = data[1].substring(1, data[1].length-1);
+		}
 
 		interpret(tempCommand, tempSearch);
 
