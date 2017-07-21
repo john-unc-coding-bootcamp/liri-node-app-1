@@ -86,10 +86,9 @@ function randomCommand() {
 
 		data = data.split(",");
 		var tempCommand = data[0];
-		var tempSearch = data[1];
-		
-		console.log(tempCommand);
-		console.log(tempSearch)
+		//not sure about this method of removing quotes
+		var tempSearch = data[1].substring(1, data[1].length-1);
+
 		interpret(tempCommand, tempSearch);
 
 	})
@@ -107,8 +106,7 @@ function interpret(com, q) {	//interprets console input
 			if (!q) {
 				title = "The Sign";
 			} else {
-				title = q.split("'");
-				console.log(title);
+				title = q;
 			}
 
 			songData(title);
@@ -122,8 +120,7 @@ function interpret(com, q) {	//interprets console input
 			if (!q) {
 				title = "Mr. Nobody";
 			} else {
-				title = q.split("'")[0];
-				console.log(title)
+				title = q;
 			}
 
 			var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=40e9cece";
@@ -139,7 +136,7 @@ function interpret(com, q) {	//interprets console input
 		}
 
 		default:
-			console.log("Sorry, nothing you say makes sense");
+			console.log("Sorry, that made no sense");
 	}
 }
 
