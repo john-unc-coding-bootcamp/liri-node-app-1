@@ -83,7 +83,6 @@ function randomCommand() {
 		if (error) {
 			return console.log(error);
 		}
-
 		data = data.split(",");
 		var tempCommand = data[0];
 		var tempSearch;
@@ -97,10 +96,21 @@ function randomCommand() {
 	})
 }
 
+function addToLog(content) {
+	fs.appendFile("log.txt", content + ", ", function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log("Modified log.txt");
+		}
+	})
+}
+
 function interpret(com, q) {	//interprets console input
 	switch(com) {
 		case "my-tweets": {
 			showTweets();
+			addToLog(com);
 			break;
 		}
 
@@ -113,6 +123,7 @@ function interpret(com, q) {	//interprets console input
 			}
 
 			songData(title);
+			addToLog(com + ": " + q);
 
 			break;
 		}
@@ -129,6 +140,7 @@ function interpret(com, q) {	//interprets console input
 			var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=40e9cece";
 
 			movieData(queryUrl);
+			addToLog(com + ": " + q); 
 
 			break;
 		}
