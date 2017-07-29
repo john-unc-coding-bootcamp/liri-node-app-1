@@ -25,22 +25,27 @@ var search = process.argv[3];
 function showTweets() {
 	client.get("statuses/user_timeline", params, function(error, response, body) {
 ////////////////////////other condition?????????????????????? //////////////////
-			if (!error) {
-				console.log("****************");
+//
+// nitpicky thing:
+// I generally will try to avoid using ! operator in a if statement
+// if there is an else statement. We can just reverse the logic.
+			if (error) {
+				console.log(error);
+			} else {
+        console.log("****************");
 				for (var i=0; i<response.length; i++) {
 					console.log("-----" + response[i].created_at + "-----");
 					console.log(response[i].text)
 				}
 				console.log("****************");
 
-			} else {
-				console.log(error);
 			}
 	});
 }
 
 function songData(query) {
 	spotify.search({ type: 'track', query: query }, function(err, data) {
+    // way to handle errors!
 		if (err) {
 	    	return console.log(err);
 	  	}
@@ -65,7 +70,12 @@ function movieData(query) {
 			console.log("Title: " + obj["Title"]);
 			console.log("Year: " + obj["Year"]);
 			console.log("IMDB Rating: " + obj["Ratings"][0]["Value"]);
-			console.log("Rotten Tomatoes Rating: " + obj["Ratings"][1]["Value"]);
+      // I had to check if this index existed first to avoid an error. I
+      // am guessing not all movies have rotten tomatoe scores returned,
+      // for the ones that don't, there will not be a 1 index.
+      if (obj["Ratings"][1]) {
+        console.log("Rotten Tomatoes Rating: " + obj["Ratings"][1]["Value"]);
+      }
 			console.log("Country: " + obj["Country"]);
 			console.log("Language: " + obj["Language"]);
 			console.log("Plot: " + obj["Plot"]);
